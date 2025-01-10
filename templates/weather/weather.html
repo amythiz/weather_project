@@ -1,0 +1,107 @@
+<!-- templates/weather/weather.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Прогноз погоды</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+<body>
+    <div class="container neo_up">
+            <form class="search" method="post">
+                {% csrf_token %}
+                <input type="text" name="city" placeholder="Город" maxlength="100" required="" id="id_city">
+                <button type="submit">Узнать погоду</button>
+                <br>
+                <input type="checkbox" name="my_checkbox" id="my_checkbox" {% if checkbox_checked %}checked{% endif %}>
+                <label for="my_checkbox">Температура в °F и ветер в миль/ч</label>
+            </form>
+            <hr>
+            
+        {% if error %}
+            <p class="error-message">{{ error }}</p>
+        {% endif %}
+
+        {% if city %}
+            <div class="flex">
+                <h2>Погода в городе {{ city }}</h2>
+            </div>
+            <div class="flex">
+                <div class="weather neo_up">
+                    <img class="icon" src="{{ current_icon }}" alt="Иконка Погоды">
+                    <p>{{ current_temp|floatformat:0 }}{% if checkbox_checked %}°F{% else %}°C{% endif %}</p>
+                    <p>{{ current_description }}</p>
+                </div>
+            </div>
+            
+            <div class="flex">
+                <div class="grid">
+                    <div  class="neo_up">Влажность: <br>{{ current_humidity }}%</div>
+                    <div class="neo_up">Давление: <br>{{ current_pressure }} гПа</div>
+                    <div class="neo_up">Скорость ветра: <br>{{ current_wind_speed }} {% if checkbox_checked %}миль/ч{% else %}м/с{% endif %}</div>
+                    <div class="neo_up">Облачность: <br>{{ current_clouds }}%</div>
+                </div>
+            </div>
+            
+            <div style="width: 70%; margin: 0 auto;">
+                <canvas id="weatherChart"></canvas>
+            </div>
+        {% endif %}
+
+        <h2>История запросов</h2>
+            <ul class="history-list">
+                {% for request in history %}
+                <li>{{ request.city_name }} {{ request.temperature|floatformat:0 }}{% if request.imperial %}°F{% else %}°C{% endif %} - {{ request.timestamp|date:"H:i:s d.m.Y" }}</li>
+                {% empty %}
+                    <li>История запросов пуста.</li>
+                {% endfor %}
+            </ul>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        const ctx = document.getElementById('weatherChart').getContext('2d');
+        const days = JSON.parse('{{ days_list_json|safe }}');
+        const temps = JSON.parse('{{ temps_list_json|safe }}');
+        
+        const myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: days,
+                datasets: [{
+                    label: 'Температура',
+                    data: temps,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 205, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                    ],
+                    borderColor: [
+                        'rgb(255, 99, 132)',
+                        'rgb(255, 159, 64)',
+                        'rgb(255, 205, 86)',
+                        'rgb(75, 192, 192)',
+                        'rgb(54, 162, 235)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    });
+    </script>
+</body>
+</html>

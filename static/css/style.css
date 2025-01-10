@@ -1,0 +1,95 @@
+html {
+    box-sizing: border-box;
+    font-size: 18px;
+    line-height: 30px;
+    font-family: 'Roboto', sans-serif;
+    color: #222;
+}
+
+body {
+    background: #e0e0e0;
+}
+
+.container {
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 40px;
+    padding: 40px;
+    width: 100%;
+    max-width: 1000px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    width: 400px;
+    padding: 20px;
+}
+
+h2 {
+    z-index: 100;
+}
+
+.neo_up {    
+    padding: 20px;  
+    border-radius: 20px;
+    background: #e0e0e0;
+    box-shadow:  20px 20px 60px #bebebe,
+             -20px -20px 60px #ffffff;
+}
+
+.flex {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+}
+
+.weather {
+    display: inline-block;
+    text-align: center;
+    margin: auto;
+    line-height: 5px;
+    padding: 15px 0 10px 0;
+}
+
+.icon {
+    margin-top: -50px;
+    margin-bottom: -50px;
+}
+
+.neo_round {
+    border-radius: 100%;
+}
+
+input[type="text"] {
+    margin-bottom: 10px;
+    font-size: 18px !important;
+    border-radius: 10px;
+    background: #e0e0e0;
+    box-shadow: inset 20px 20px 60px #bebebe,
+                inset -20px -20px 60px #ffffff;
+    padding: 16px 25px; 
+    border: none;
+    outline: none;
+    transition: box-shadow 0.3s ease;
+}
+
+button {
+    color: #090909;
+    padding: 15.5px 15px;
+    margin-left: -10px;
+    font-size: 18px;
+    border-radius: 10px;
+    background: #e8e8e8;
+    cursor: pointer;
+    border: 1px solid #e8e8e8;
+    transition: all 0.3s;
+    box-shadow: 6px 6px 12px #c5c5c5, -6px -6px 12px #ffffff;
+  }
+  
+  button:active {
+    color: #666;
+    box-shadow: inset 4px 4px 12px #c5c5c5, inset -4px -4px 12px #ffffff;
+  }

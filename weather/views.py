@@ -9,7 +9,7 @@ from datetime import datetime
 from django.http import JsonResponse
 
 
-OPENWEATHER_API_KEY = '6cf024b69a9b8ce23ffeb16a72939a48'
+OPENWEATHER_API_KEY = 'API_KEY'
 ICON_URL = 'https://openweathermap.org/img/wn/' # <icon>@2x.png
 
 def get_weather_data(city_name, units="metric"):
